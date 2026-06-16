@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智汇四川工商学院 · 自适应多智能体系统</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=11">
+</head>
+<body>
+
+    <!-- ====== 滚动进度条 ====== -->
+    <div id="scroll-progress"></div>
+
+    <!-- ====== 导航顶栏 ====== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar__inner">
+            <div class="navbar__logo">
+                <span class="navbar__logo-icon">◆</span>
+                <span class="navbar__logo-text">智汇四川工商学院</span>
+            </div>
+            <nav class="navbar__nav" id="navbar-nav">
+                <a href="javascript:void(0)" class="nav-link" data-target="hero">首页</a>
+                <a href="javascript:void(0)" class="nav-link" data-target="chat">对话</a>
+                <a href="javascript:void(0)" class="nav-link" data-target="tech">技术栈</a>
+                <div class="nav-underline" id="nav-underline"></div>
+            </nav>
+            <div class="navbar__right">
+                <span class="navbar__status">
+                    <span class="navbar__status-dot"></span>
+                    系统在线
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ====== 第一屏：Hero ====== -->
+    <section class="hero" id="hero">
+        <div class="hero__bg">
+            <div class="hero__shape hero__shape--1"></div>
+            <div class="hero__shape hero__shape--2"></div>
+            <div class="hero__shape hero__shape--3"></div>
+            <canvas id="particle-canvas" class="hero__particles"></canvas>
+        </div>
+        <div class="hero__content">
+            <div class="hero__badge">智汇 · v2.0</div>
+            <h1 class="hero__title">
+                <span class="hero__title-line">四川工商学院</span>
+                <span class="hero__title-line">校园中枢系统</span>
+            </h1>
+            <p class="hero__subtitle">
+                高精 RAG 审计 · 临床级心理防线 · 自适应演进架构
+            </p>
+            <div class="hero__actions">
+                <button class="hero__btn hero__btn--primary" id="hero-start-btn">开始对话</button>
+                <button class="hero__btn hero__btn--ghost" id="hero-learn-btn">了解技术</button>
+            </div>
+            <div class="hero__indicator">
+                <span>向下滚动探索</span>
+                <div class="hero__arrow">↓</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== 第二屏：对话 ====== -->
+    <section class="chat-section" id="chat-section">
+        <div class="chat-section__inner">
+            <div class="chat-section__label">INTELLIGENT CONSOLE</div>
+            <h2 class="chat-section__title">智能对话中枢</h2>
+            <p class="chat-section__desc">
+                路由中枢 + 多专家协同，覆盖政策咨询、心理支持、教务操作
+            </p>
+
+            <div class="chat-container glass" id="chat-container">
+                <!-- 聊天头部 -->
+                <div class="chat-header">
+                    <div class="chat-header__left">
+                        <div class="chat-avatar">
+                            <span class="chat-avatar__icon">AI</span>
+                        </div>
+                        <div>
+                            <div class="chat-header__name">四川工商学院助手</div>
+                            <div class="chat-header__model">路由: Mimo-v2.5 · 推理: DeepSeek-V4</div>
+                        </div>
+                    </div>
+                    <div class="chat-header__right">
+                        <span class="chat-header__badge">LIVE</span>
+                        <button class="chat-header__btn" id="reset-chat-btn" title="新会话">↻</button>
+                    </div>
+                </div>
+
+                <!-- 消息区 -->
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message assistant">
+                        <div class="msg-avatar">AI</div>
+                        <div class="msg-content">
+                            <p>你好呀！我是四川工商校园助手，有什么可以帮你的？</p>
+                            <p class="msg-hint">你可以问我关于学籍政策、选课事务，或者只是找我聊聊天。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 输入区 -->
+                <div class="chat-input-area">
+                    <div class="input-wrapper">
+                        <textarea id="chat-input" rows="1" placeholder="输入你的问题..." maxlength="500"></textarea>
+                        <button id="send-btn" class="send-btn" disabled>
+                            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/></svg>
+                        </button>
+                    </div>
+                    <div class="input-footer">
+                        <span>Shift + Enter 换行</span>
+                        <span>·</span>
+                        <span>Enter 发送</span>
+                    </div>
+                </div>
+
+                <!-- 危机覆盖层 -->
+                <div id="crisis-overlay" class="crisis-overlay hidden">
+                    <div class="crisis-card">
+                        <div class="crisis-icon">⚠️</div>
+                        <h2>校园心理健康中心</h2>
+                        <p class="crisis-subtitle">24 小时生命守护红线</p>
+                        <div class="crisis-divider"></div>
+                        <p id="crisis-text" class="crisis-text"></p>
+                        <button id="crisis-close-btn" class="crisis-btn">我已了解</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== 第三屏：技术总结 ====== -->
+    <section class="tech-section" id="tech-section">
+        <div class="tech-section__inner">
+            <div class="tech-section__label">TECHNICAL ARCHITECTURE</div>
+            <h2 class="tech-section__title">所用技术栈</h2>
+            <p class="tech-section__desc">三大核心技术，构筑安全、精准、自适应的校园智能体</p>
+
+            <div class="tech-grid">
+                <!-- 卡片 1: RAG -->
+                <div class="tech-card glass" data-tech="rag">
+                    <div class="tech-card__glow"></div>
+                    <div class="tech-card__icon">
+                        <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="24" r="5" fill="currentColor"/></svg>
+                    </div>
+                    <h3 class="tech-card__title">高级 RAG 审计</h3>
+                    <p class="tech-card__desc">
+                        向量检索 + BM25 双路召回，RRF 重排融合，置信度阈值拦截，杜绝 AI 幻觉。
+                    </p>
+                    <div class="tech-card__tags">
+                        <span>ChromaDB</span>
+                        <span>Sentence-Transformers</span>
+                        <span>BM25</span>
+                    </div>
+                </div>
+
+                <!-- 卡片 2: Function Calling -->
+                <div class="tech-card glass" data-tech="fc">
+                    <div class="tech-card__glow"></div>
+                    <div class="tech-card__icon">
+                        <svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><text x="24" y="29" text-anchor="middle" fill="currentColor" font-size="16" font-family="monospace" font-weight="bold">Fx</text></svg>
+                    </div>
+                    <h3 class="tech-card__title">Function Calling</h3>
+                    <p class="tech-card__desc">
+                        DeepSeek 语义解析 → 结构化参数 → 行锁事务 + 容量校验，高并发零差错。
+                    </p>
+                    <div class="tech-card__tags">
+                        <span>DeepSeek-V4</span>
+                        <span>MySQL</span>
+                        <span>行级锁</span>
+                    </div>
+                </div>
+
+                <!-- 卡片 3: 自适应 -->
+                <div class="tech-card glass" data-tech="evolve">
+                    <div class="tech-card__glow"></div>
+                    <div class="tech-card__icon">
+                        <svg viewBox="0 0 48 48"><path d="M24 8l3 9h10l-8 6 3 9-8-5-8 5 3-9-8-6h10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="tech-card__title">自适应演进架构</h3>
+                    <p class="tech-card__desc">
+                        离线反思引擎深夜复盘失败案例，提炼 Few-Shot 指南反哺提示词，持续自愈。
+                    </p>
+                    <div class="tech-card__tags">
+                        <span>DeepSeek 反思</span>
+                        <span>Redis 记忆</span>
+                        <span>提示词增强</span>
+                    </div>
+                </div>
+
+                <!-- 卡片 4: 安全 -->
+                <div class="tech-card glass" data-tech="safety">
+                    <div class="tech-card__glow"></div>
+                    <div class="tech-card__icon">
+                        <svg viewBox="0 0 48 48"><path d="M24 4L6 12v8c0 12 7 22 18 26 11-4 18-14 18-26v-8L24 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M18 24l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="tech-card__title">三道安全防线</h3>
+                    <p class="tech-card__desc">
+                        Trie 树危机词拦截 + 情感极性监控 + 灰度降级，临床级心理安全守护。
+                    </p>
+                    <div class="tech-card__tags">
+                        <span>Trie 树</span>
+                        <span>情感分析</span>
+                        <span>灰度降级</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== 页脚 ====== -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <span>智汇校园 · Autonomous Adaptive Campus Agent Hub</span>
+            <span class="footer__sep">·</span>
+            <span>v2.0</span>
+        </div>
+    </footer>
+
+    <!-- ====== Scripts ====== -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <script src="js/animations.js?v=11"></script>
+    <script src="js/sse-stream.js?v=11"></script>
+    <script src="js/main.js?v=11"></script>
+</body>
+</html>

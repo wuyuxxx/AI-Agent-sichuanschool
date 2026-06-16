@@ -1,0 +1,27 @@
+# Byte-compiled
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.venv
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Claude / MCP tool config
+.claude/
+.playwright-mcp/
+
+# Vector DB (auto-generated at runtime)
+mental_chroma/
+policy_chroma/
+
+# Backup / docs artifacts
+*.docx
+*.pdf
+*.7z
+2025314259_吴瑜_项目源码/
+report.docx
